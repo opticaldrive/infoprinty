@@ -23,6 +23,7 @@
 <script type="module">
     try {
         const response = await fetch('https://ipapi.co/json/');
+        if (!response.ok) throw new Error('ipapi status ' + response.status);
         const data = await response.json()
         console.log(data)
         document.getElementById('client-ip').textContent = data.ip;
@@ -32,19 +33,29 @@
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
         var marker = L.marker([data.latitude, data.longitude]).addTo(map);
+    } catch (error) {
+        console.error("ipapi lookup failed:", error);
+        document.getElementById('client-ip').textContent = 'unavailable';
+    }
 
+    try {
         const responsev4 = await fetch('https://ipv4.wtfismyip.com/json');
         const datav4 = await responsev4.json()
         console.log(datav4)
         document.getElementById('client-ipv4').textContent = datav4.YourFuckingIPAddress;
+    } catch (error) {
+        console.error("ipv4 lookup failed:", error);
+        document.getElementById('client-ipv4').textContent = 'unavailable';
+    }
 
+    try {
         const responsev6 = await fetch('https://ipv6.wtfismyip.com/json');
         const datav6 = await responsev6.json()
         console.log(datav6)
         document.getElementById('client-ipv6').textContent = datav6.YourFuckingIPAddress;
-
     } catch (error) {
-        console.error("PII unable to be stolen! master haxxor detected");
+        console.error("ipv6 lookup failed:", error);
+        document.getElementById('client-ipv6').textContent = 'unavailable';
     }
 </script>
 ur ip according to (ipv6 only) server-> {{ip}}
