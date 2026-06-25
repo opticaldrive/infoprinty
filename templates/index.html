@@ -12,7 +12,10 @@
 </style>
 </head>
 <body>
+
 <div id="map"></div>
+<p><b>sending nuke to your location :3</b></p>
+<img src="{{ url_for('static', path='pointy.png') }}" alt="pointy" width="200">
 <p>ur ip according to the browser -> <span id="client-ip">loading...</span></p>
 <p>ur ipv4 according to the browser -> <span id="client-ipv4">loading...</span></p>
 <p>ur ipv6 according to the browser -> <span id="client-ipv6">loading...</span></p>
@@ -45,8 +48,13 @@
     }
 </script>
 ur ip according to (ipv6 only) server-> {{ip}}
-
-
+<br>
+<br>
 headers:
+<ul>
+{% for name, value in headers.items() %}
+    <li>{{ name }}: {{ value }}</li>
+{% endfor %}
+</ul>
 
 </body>
