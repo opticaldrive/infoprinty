@@ -49,7 +49,6 @@ def get_headers(request: Request):
 def get_info(request: Request):  
     xff = request.headers.get("X-Forwarded-For")
     ip = xff.split(",")[0].strip() if xff else request.client.host
-    ip="203.0.113.0"
     return geo_ip(ip)
 
 def geo_ip(ip):
