@@ -20,7 +20,7 @@
  
 -->
 
-<div id="map-wrap" style="position: relative; width: 50vw; float: right;">
+<div id="map-wrap" style="position: relative; width: 800px; float: right;">
     <div id="map" style="height: 400px;"></div>
 
     <img src="{{ url_for('static', path='pointy-left.png') }}"  alt="pointy-left"
@@ -35,21 +35,19 @@
 <p>ur ipv6 according to the browser -> <span id="client-ipv6">loading...</span></p>
 
 <script type="module">
-    try {
-        const response = await fetch('https://ipapi.co/json/');
-        if (!response.ok) throw new Error('ipapi status ' + response.status);
-        const data = await response.json()
-        console.log(data)
-        document.getElementById('client-ip').textContent = data.ip;
-        var map = L.map('map').setView([data.latitude, data.longitude], 13);
+    const geo = {{ geo | tojson }};
+    if (geo && geo.lat != null && geo.lon != null) {
+        document.getElementById('client-ip').textContent =
+            [geo.city, geo.country].filter(Boolean).join(', ') || 'unknown';
+        var map = L.map('map').setView([geo.lat, geo.lon], 13);
         map.attributionControl.setPosition('topright');
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
-        var marker = L.marker([data.latitude, data.longitude]).addTo(map);
-    } catch (error) {
-        console.error("ipapi lookup failed:", error);
+        var marker = L.marker([geo.lat, geo.lon]).addTo(map);
+    } else {
+        console.error("server geo lookup returned nothing");
         document.getElementById('client-ip').textContent = 'unavailable';
     }
 
@@ -73,7 +71,7 @@
         document.getElementById('client-ipv6').textContent = 'unavailable';
     }
 </script>
-ur ip according to server-> {{ip}}
+ur ip according to (ipv6 only) server-> {{ip}}
 <br>
 <br>
 headers:

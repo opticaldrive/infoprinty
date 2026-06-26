@@ -29,6 +29,7 @@ def get_homepage(request: Request):
         context={
             "request.client.host": request.client.host,
             "ip": ip, #request.headers.get("X-Forwarded-For"),
+            "geo": geo_ip(ip),
             "headers": request.headers,
             "cookies": request.cookies
         },
@@ -56,6 +57,7 @@ def geo_ip(ip):
         city = city_reader.city(ip)
         asn  = asn_reader.asn(ip)
         geo = {
+            "ip": ip,
             "country": city.country.name,
             "city": city.city.name,
             "lat": city.location.latitude,
