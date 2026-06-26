@@ -35,7 +35,9 @@ ur ip according to (ipv6 only) server-> {{ip}}
 <br>
 <p>ur ipv4 according to the wtf -> <span id="client-ipv4">loading...</span></p>
 <p>ur ipv6 according to the wtf -> <span id="client-ipv6">loading...</span></p>
-<p>ur ip according to the ip-api.com -> <span id="client-ipv6">loading...</span></p>
+<p>ur ip according to the ip-api.com -> <span id="client-ipap">loading...</span></p>
+<p>ur ipv4 according to the ident.me -> <span id="client-identv4">loading...</span></p>
+<p>ur ipv6 according to the ident.me -> <span id="client-identv6">loading...</span></p>
 
 <script type="module">
     const geo = {{ geo | tojson }};
@@ -82,6 +84,26 @@ ur ip according to (ipv6 only) server-> {{ip}}
     } catch (error) {
         console.error("ipv6 lookup failed:", error);
         document.getElementById('client-ipv6').textContent = 'unavailable';
+    }
+
+    try {
+        const responseid4 = await fetch('https://4.ident.me/json');
+        const dataid4 = await responseid4.json()
+        console.log(dataid4)
+        document.getElementById('client-identv4').textContent = dataid4.ip;
+    } catch (error) {
+        console.error("ident.me ipv4 lookup failed:", error);
+        document.getElementById('client-identv4').textContent = 'unavailable';
+    }
+
+    try {
+        const responseid6 = await fetch('https://6.ident.me/json');
+        const dataid6 = await responseid6.json()
+        console.log(dataid6)
+        document.getElementById('client-identv6').textContent = dataid6.ip;
+    } catch (error) {
+        console.error("ident.me ipv6 lookup failed:", error);
+        document.getElementById('client-identv6').textContent = 'unavailable';
     }
 </script>
 

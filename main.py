@@ -3,7 +3,6 @@ from fastapi import Request, APIRouter
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-
 import geoip2.database
 
 city_reader = geoip2.database.Reader("geoip/GeoLite2-City.mmdb")
