@@ -13,9 +13,23 @@
 </head>
 <body>
 
-<div id="map"></div>
+
 <p><b>sending nuke to your location :3</b></p>
-<img src="{{ url_for('static', path='pointy.png') }}" alt="pointy" width="200">
+<!-- <img src="{{ url_for('static', path='pointy.png') }}" alt="pointy" width="200"> -->
+<!-- <img src="{{ url_for('static', path='pointy-right.png') }}" alt="pointy" width="200">
+ 
+-->
+
+<div id="map-wrap" style="position: relative; width: 800px; float: right;">
+    <div id="map" style="height: 400px;"></div>
+
+    <img src="{{ url_for('static', path='pointy-left.png') }}"  alt="pointy-left"
+         style="position: absolute; bottom: 0; left: 0;  width: 160px; z-index: 1000;">
+
+    <img src="{{ url_for('static', path='pointy-right.png') }}" alt="pointy-right"
+         style="position: absolute; bottom: 0; right: 0; width: 160px; z-index: 1000;">
+</div>
+
 <p>ur ip according to the browser -> <span id="client-ip">loading...</span></p>
 <p>ur ipv4 according to the browser -> <span id="client-ipv4">loading...</span></p>
 <p>ur ipv6 according to the browser -> <span id="client-ipv6">loading...</span></p>
