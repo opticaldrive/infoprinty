@@ -2,8 +2,9 @@
  
 we printy info about u \
 tl;dr we printy your ip address for mastor haxxor \
-that's it
-## screenshot
+that's it \
+This took me WAYY too long to make bc im dumb \
+a lot of mistakes and ig i need to be better at html(skill issues) and computeries \
 ![Screenshot of website showing what it looks like from finland](static/example-finland.png)
 ## tech stack
 * python
