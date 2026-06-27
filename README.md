@@ -10,6 +10,19 @@ that's it
 * fastapi
 * GeoLite2
 
+
+## todo:
+* more fingerprinting
+* popups
+* torrent checker
+* print asns
+* browser info
+* camera/microphone/geo/downloads stuff
+* super nuke location computer
+* master haxxor theme
+
+
+
 ## databases taken from here:
 https://github.com/P3TERX/GeoLite.mmdb/releases/download/2026.06.25/GeoLite2-City.mmdb
 https://github.com/P3TERX/GeoLite.mmdb/releases/download/2026.06.25/GeoLite2-ASN.mmdb
