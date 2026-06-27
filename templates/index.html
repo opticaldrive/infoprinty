@@ -56,55 +56,25 @@ ur ip according to (ipv6 only) server-> {{ip}}
         document.getElementById('client-ip').textContent = 'unavailable';
     }
 
-    try {
-        const responseap = await fetch('http://ip-api.com/json/');
-        const dataap = await responseap.json()
-        console.log(dataap)
-        document.getElementById('client-ipap').textContent = dataap.query;
-    } catch (error) {
-        console.error("ipv4 lookup failed:", error);
-        document.getElementById('client-ipap').textContent = 'unavailable';
+    async function lookup(elementId, url, pick, label) {
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            console.log(data);
+            document.getElementById(elementId).textContent = pick(data);
+        } catch (error) {
+            console.error(`${label} lookup failed:`, error);
+            document.getElementById(elementId).textContent = 'unavailable';
+        }
     }
 
-    try {
-        const responsev4 = await fetch('https://ipv4.wtfismyip.com/json');
-        const datav4 = await responsev4.json()
-        console.log(datav4)
-        document.getElementById('client-ipv4').textContent = datav4.YourFuckingIPAddress;
-    } catch (error) {
-        console.error("ipv4 lookup failed:", error);
-        document.getElementById('client-ipv4').textContent = 'unavailable';
-    }
-
-    try {
-        const responsev6 = await fetch('https://ipv6.wtfismyip.com/json');
-        const datav6 = await responsev6.json()
-        console.log(datav6)
-        document.getElementById('client-ipv6').textContent = datav6.YourFuckingIPAddress;
-    } catch (error) {
-        console.error("ipv6 lookup failed:", error);
-        document.getElementById('client-ipv6').textContent = 'unavailable';
-    }
-
-    try {
-        const responseid4 = await fetch('https://4.ident.me/json');
-        const dataid4 = await responseid4.json()
-        console.log(dataid4)
-        document.getElementById('client-identv4').textContent = dataid4.ip;
-    } catch (error) {
-        console.error("ident.me ipv4 lookup failed:", error);
-        document.getElementById('client-identv4').textContent = 'unavailable';
-    }
-
-    try {
-        const responseid6 = await fetch('https://6.ident.me/json');
-        const dataid6 = await responseid6.json()
-        console.log(dataid6)
-        document.getElementById('client-identv6').textContent = dataid6.ip;
-    } catch (error) {
-        console.error("ident.me ipv6 lookup failed:", error);
-        document.getElementById('client-identv6').textContent = 'unavailable';
-    }
+    // Fire all lookups in parallel so a slow/hanging endpoint
+    // (e.g. IPv6 with no IPv6 connectivity) doesn't block the others.
+    lookup('client-ipap', 'http://ip-api.com/json/', d => d.query, 'ip-api');
+    lookup('client-ipv4', 'https://ipv4.wtfismyip.com/json', d => d.YourFuckingIPAddress, 'wtf ipv4');
+    lookup('client-ipv6', 'https://ipv6.wtfismyip.com/json', d => d.YourFuckingIPAddress, 'wtf ipv6');
+    lookup('client-identv4', 'https://4.ident.me/json', d => d.ip, 'ident.me ipv4');
+    lookup('client-identv6', 'https://6.ident.me/json', d => d.ip, 'ident.me ipv6');
 </script>
 
 <br>
